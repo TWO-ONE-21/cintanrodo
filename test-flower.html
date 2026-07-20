@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flower Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    body { background: #1a0b16; color: white; text-align: center; font-family: sans-serif; display: flex; justify-content: space-around; padding-top: 50px; }
+    .flower-container { width: 300px; height: 300px; transform-origin: bottom center; }
+  </style>
+</head>
+<body>
+  <div>
+    <h3>Flower Animation.json</h3>
+    <div id="flower1" class="flower-container"></div>
+    <button onclick="play1()">Replay & Sway</button>
+  </div>
+  <div>
+    <h3>Floral Ornamental Design.json</h3>
+    <div id="flower2" class="flower-container"></div>
+    <button onclick="play2()">Replay & Sway</button>
+  </div>
+
+  <script>
+    const anim1 = lottie.loadAnimation({
+      container: document.getElementById('flower1'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      path: '/flower-json/Flower Animation.json'
+    });
+
+    const anim2 = lottie.loadAnimation({
+      container: document.getElementById('flower2'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      path: '/flower-json/Floral Ornamental Design.json'
+    });
+
+    function playAndSway(anim, elementId) {
+      const el = document.getElementById(elementId);
+      gsap.killTweensOf(el);
+      gsap.set(el, { scale: 1, rotation: 0 });
+      anim.goToAndStop(0, true);
+      anim.play();
+      
+      anim.addEventListener('complete', function onComplete() {
+        anim.removeEventListener('complete', onComplete);
+        // Start infinite sway (breathing effect)
+        gsap.to(el, {
+          scale: 1.05,
+          rotation: 3,
+          duration: 3,
+          yoyo: true,
+          repeat: -1,
+          ease: 'sine.inOut'
+        });
+      });
+    }
+
+    function play1() { playAndSway(anim1, 'flower1'); }
+    function play2() { playAndSway(anim2, 'flower2'); }
+
+    setTimeout(play1, 1000);
+    setTimeout(play2, 1000);
+  </script>
+</body>
+</html>

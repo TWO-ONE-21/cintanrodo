@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 4th Month Anniversary</title>
+  <style>
+    /* Prevent Flash of Unstyled Content (FOUC) while Vite loads JS/CSS */
+    body {
+      background-color: #1a0b16;
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+      touch-action: none;
+    }
+    #intro-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #1a0b16;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .intro-state {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #loading-state.active {
+      opacity: 1;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffc8d2;
+    }
+    #letter-phase-container, #ui-container {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Intro Overlay Sequence -->
+  <div id="intro-overlay">
+
+    <!-- Stage 1: Loading -->
+    <div id="loading-state" class="intro-state active">
+      <div class="spinner"></div>
+      <p>sebentar ya bub, lagi loading.</p>
+    </div>
+
+    <!-- Stage 2: Flowers (populated by JS Canvas 2D) -->
+    <div id="flower-state" class="intro-state">
+      <canvas id="flower-canvas"></canvas>
+      <div class="swipe-hint" id="swipe-hint">
+        <div class="swipe-line-container">
+          <div class="swipe-line"></div>
+        </div>
+        <span>Scroll</span>
+      </div>
+    </div>
+
+    <!-- Stage 3: First Photo -->
+    <div id="photo-state" class="intro-state">
+      <div class="photo-frame">
+        <img src="/img/first.webp" alt="Our first PAP" id="first-pap"
+          onerror="this.src='/flower/flower-1.png'; this.style.opacity='0.1';">
+        <div class="photo-caption">It started with 1 pap on March 21, 2026...</div>
+      </div>
+      <div class="scroll-hint">
+        <div class="mouse"></div>
+        <p>Scroll to dive into our memories</p>
+      </div>
+    </div>
+
+  </div>
+
+  <audio id="bgm" src="/bgm.mp3" loop></audio>
+
+  <div id="canvas-container"></div>
+
+  <div id="finale-overlay">
+    <div class="finale-content">
+      <p class="finale-sub">from March 20 to forever</p>
+      <h1 class="finale-title">4 Months<br>With You</h1>
+      <div class="finale-divider"></div>
+      <p class="finale-name">Cinta<span id="cintan-n">n</span></p>
+    </div>
+    <div id="finale-butterflies"></div>
+  </div>
+
+  <!-- Letter Phase (Interactive unrolling scroll) -->
+  <div id="letter-phase-container">
+      <div id="left-flower" class="side-flower"></div>
+      <div id="right-flower-wrapper" class="side-flower" style="transform: scaleX(-1); transform-origin: bottom center; right: -5%;">
+        <div id="right-flower" style="width: 100%; height: 100%; transform-origin: bottom center;"></div>
+      </div>
+      
+      <div class="scroll-wrapper">
+        <div class="scroll-top-roller"></div>
+        <div class="scroll-paper-container">
+          <div class="scroll-paper-content">
+          <h2 class="letter-greeting">Dear my lovely, cintan....</h2>
+          <p class="letter-body">
+            Kamu tau betapa hebatnya potret indahmu yang pertama kali muncul di awal tadi? potret itu seolah menyihir
+            waktu, mampu membuat hati kerasku ini seketika memerah hangat. Membuat pupilku membesar, dan paru-paruku
+            membeku, terkesima hingga lupa caranya bernapas.
+          </p>
+          <p class="letter-body">
+            <span id="counter-numbers" class="inline-counter">-- hari, -- jam, -- menit, dan -- detik</span> telah
+            berlalu, dan kita masih selalu bersama sampai dengan hari ini. tetaplah menjadi warna terindah di duniaku,
+            dan kupu-kupu yang menghidupkan tamanku.
+          </p>
+          <p class="letter-body">
+            Kamu harus tau bahwa kamu adalah perempuan paling aku sayangi seumur hidupku. Terimakasih sudah mengizinkan
+            aku mencintaimu.
+          </p>
+          <p class="letter-signature">
+            your lover,<br>
+            <strong>Rodo</strong>
+          </p>
+        </div>
+      </div>
+      <div class="scroll-bottom-roller"></div>
+    </div>
+  </div>
+
+  <div id="dynamic-island" class="dynamic-island">
+    <span class="island-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <polyline points="19 12 12 19 5 12"></polyline>
+      </svg>
+    </span>
+    <span class="island-text">scroll dari atas kebawah bub</span>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
